@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_rules"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DCDCDC"
+    tools:context="com.example.huawei.maquinadeturing.activities.RulesActivity">
+
+    <EditText
+        android:id="@+id/set_rule"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="currentState, currentSymbol, newSymbol, direction, newState"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:background="@drawable/shape_edit"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_rule"
+        android:layout_below="@id/set_rule"/>
+
+    <ImageButton
+        android:id="@+id/sad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sad"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="#DCDCDC" />
+
+    <TextView
+        android:id="@+id/sad_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Você ainda não adicionou nenhuma regra para a Máquina de Turing"
+        android:layout_below="@id/sad"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="50dp"/>
+
+
+</RelativeLayout>

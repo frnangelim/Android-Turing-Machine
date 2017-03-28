@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_executing"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:gravity="center"
+    android:background="#DCDCDC"
+    tools:context="com.example.huawei.maquinadeturing.activities.ExecutingActivity">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        card_view:cardBackgroundColor="#808080">
+
+
+        <TextView
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="001"
+            android:textSize="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="45dp"/>
+
+        <TextView
+            android:id="@+id/selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="1"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:textColor="#008000"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="001"
+            android:textSize="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="45dp"/>
+
+        <ImageView
+            android:id="@+id/play"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/selected"
+            android:src="@drawable/play_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/pause"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/selected"
+            android:layout_toRightOf="@id/play"
+            android:src="@drawable/pause_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:id="@+id/stop"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/stop"
+            android:layout_toLeftOf="@id/play"
+            android:layout_below="@id/selected"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="45dp"
+            android:layout_gravity="center"/>
+
+    </android.support.v7.widget.CardView>
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/current_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estado atual: "
+            android:layout_marginTop="3dp"/>
+
+        <TextView
+            android:id="@+id/current_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Símbolo atual: "
+            android:layout_below="@id/current_state"
+            android:layout_marginTop="3dp"/>
+
+        <TextView
+            android:id="@+id/new_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Novo símbolo: "
+            android:layout_below="@id/current_symbol"
+            android:layout_marginTop="3dp"/>
+
+        <TextView
+            android:id="@+id/direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Direção: "
+            android:layout_below="@id/new_symbol"
+            android:layout_marginTop="3dp"/>
+
+        <TextView
+            android:id="@+id/new_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Novo estado: "
+            android:layout_below="@id/direction"
+            android:layout_marginTop="3dp"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:background="#000000"
+            android:layout_below="@id/new_state"
+            android:layout_marginTop="5dp"/>
+
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/garbage"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:clickable="true"/>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
