@@ -1,10 +1,13 @@
 package com.example.huawei.maquinadeturing.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by huawei on 28/03/17.
  */
 
-public class Rule {
+public class Rule implements Parcelable {
 
     private String currentState;
     private String currentSymbol;
@@ -63,4 +66,39 @@ public class Rule {
     public void setCurrentState(String currentState) {
         this.currentState = currentState;
     }
+
+    protected Rule(Parcel in) {
+        currentState = in.readString();
+        currentSymbol = in.readString();
+        newSymbol = in.readString();
+        direction = in.readString();
+        newState = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(currentState);
+        dest.writeString(currentSymbol);
+        dest.writeString(newSymbol);
+        dest.writeString(direction);
+        dest.writeString(newState);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Rule> CREATOR = new Parcelable.Creator<Rule>() {
+        @Override
+        public Rule createFromParcel(Parcel in) {
+            return new Rule(in);
+        }
+
+        @Override
+        public Rule[] newArray(int size) {
+            return new Rule[size];
+        }
+    };
 }

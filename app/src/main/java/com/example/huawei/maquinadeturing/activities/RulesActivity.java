@@ -1,6 +1,9 @@
 package com.example.huawei.maquinadeturing.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,11 +16,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.huawei.maquinadeturing.R;
 import com.example.huawei.maquinadeturing.adapters.RulesAdapter;
 import com.example.huawei.maquinadeturing.interfaces.OnEmptyRulesListener;
+import com.example.huawei.maquinadeturing.models.Profile;
 import com.example.huawei.maquinadeturing.models.Rule;
+import com.example.huawei.maquinadeturing.models.State;
+import com.example.huawei.maquinadeturing.util.SessionManager;
 
 import java.util.ArrayList;
 
@@ -28,8 +35,13 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
     private ImageView sadFace;
     private TextView sadMessage;
     private ArrayList<Rule> mRules = new ArrayList<>();
+    private ArrayList<State> mStates = new ArrayList<>();
 
     private EditText setRules;
+
+    private final String MACHINE_STATES = "STATES";
+
+    private Profile profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +49,15 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         setContentView(R.layout.activity_rules);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Defina as regras");
+        getSupportActionBar().setTitle("Set your rules");
+
+        if(SessionManager.getInstance(getApplicationContext()).getUserSession() == null){
+            SessionManager.getInstance(getApplicationContext()).startUserSession(new Profile());
+        }else{
+            profile = SessionManager.getInstance(getApplicationContext()).getUserSession();
+            mStates = profile.getStates();
+            mRules = profile.getRules();
+        }
 
         createRecyclerView();
 
@@ -46,7 +66,6 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         setRules = (EditText) findViewById(R.id.set_rule);
 
         setRules.setOnKeyListener(this);
-
 
         createAdapter();
     }
@@ -63,6 +82,7 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
 
 
     private void createAdapter() {
+        checkRulesSize();
         if(mAdapter == null) {
             mAdapter = new RulesAdapter(this, mRules, this);
         } else {
@@ -76,14 +96,17 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
     @Override
     public void checkRulesSize() {
         if(mRules.size() == 0){
+            mRecyclerView.setVisibility(View.INVISIBLE);
             sadFace.setVisibility(View.VISIBLE);
             sadMessage.setVisibility(View.VISIBLE);
         }else{
             sadFace.setVisibility(View.INVISIBLE);
             sadMessage.setVisibility(View.INVISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
         }
     }
 
+    // Metodo para quando apertar 'enter' no editText realizar ação.
     @Override
     public boolean onKey(View view, int keyCode, KeyEvent event) {
         if (keyCode == EditorInfo.IME_ACTION_SEARCH ||
@@ -95,6 +118,7 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
                 Log.v("AndroidEnterKeyActivity","Enter Key Pressed!");
                 switch (view.getId()) {
                     case R.id.set_rule:
+                        validateRule(setRules.getText().toString());
                         setRules.getText().clear(); // Limpa edit text
                         break;
                 }
@@ -104,5 +128,86 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         }
         return false;
 
+    }
+
+    private void validateRule(String input){
+        String rule = input;
+        String[] array = rule.split(",");
+
+        if(array.length == 5){
+            if(array[3].equalsIgnoreCase("L") || array[3].equalsIgnoreCase("R")){
+                Rule newRule = new Rule();
+                for(int i = 0; i < array.length; i++){
+                    newRule.setCurrentState(array[0]);
+                    newRule.setCurrentSymbol(array[1]);
+                    newRule.setNewSymbol(array[2]);
+                    newRule.setDirection(array[3]);
+                    newRule.setNewState(array[4]);
+                }
+                mRules.add(newRule);
+                mAdapter.notifyDataSetChanged();
+                checkRulesSize(); // Verify if the rules are empty to change UI.
+
+                createState(newRule); // Important !
+            }else{
+                Toast.makeText(this, "Digite uma regra válida!", Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(this, "Digite uma regra válida!", Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+    private void createState(Rule newRule) {
+        String currentStateName = newRule.getCurrentState();
+        boolean stateExist = false;
+        for(int i = 0; i < mStates.size(); i++){
+            if(mStates.get(i).getStateName().equals(currentStateName)){
+                mStates.get(i).addRule(newRule);
+                stateExist = true;
+            }
+        }
+        if(!stateExist){
+            State newState = new State(newRule.getCurrentState());
+            newState.addRule(newRule);
+
+            mStates.add(newState);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.profile.setStates(mStates);
+        this.profile.setRules(mRules);
+        SessionManager.getInstance(getApplicationContext()).setUser(profile);
+        finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.delete, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.delete_rules:
+                deleteAll();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void deleteAll(){
+        mRules = new ArrayList<>();
+        mStates = new ArrayList<>();
+        profile.setRules(mRules);
+        profile.setStates(mStates);
+        SessionManager.getInstance(getApplicationContext()).setUser(profile);
+        createAdapter();
     }
 }

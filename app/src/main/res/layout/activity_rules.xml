@@ -14,7 +14,18 @@
         android:hint="currentState, currentSymbol, newSymbol, direction, newState"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:background="@drawable/shape_edit"/>
+        android:background="@drawable/shape_edit"
+        />
+    
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/set_rule"
+        android:text="Rules"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="20dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
@@ -22,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_rule"
-        android:layout_below="@id/set_rule"/>
+        android:layout_below="@+id/title" />
 
     <ImageButton
         android:id="@+id/sad"
@@ -37,7 +48,7 @@
         android:id="@+id/sad_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Você ainda não adicionou nenhuma regra para a Máquina de Turing"
+        android:text="You haven't added any rules to your Turing Machine"
         android:layout_below="@id/sad"
         android:gravity="center"
         android:layout_centerHorizontal="true"

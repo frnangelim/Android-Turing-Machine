@@ -49,7 +49,6 @@ public class RulesAdapter extends RecyclerView.Adapter<RulesAdapter.ViewHolder> 
         TextView newSymbol;
         TextView direction;
         TextView newState;
-        final ImageView delete;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -59,17 +58,6 @@ public class RulesAdapter extends RecyclerView.Adapter<RulesAdapter.ViewHolder> 
             newSymbol = (TextView) itemView.findViewById(R.id.new_symbol);
             direction = (TextView) itemView.findViewById(R.id.direction);
             newState = (TextView) itemView.findViewById(R.id.new_state);
-
-            delete = (ImageView) itemView.findViewById(R.id.delete);
-
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mRules.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
-                    checkAdapter();
-                }
-            });
         }
 
 
@@ -88,12 +76,12 @@ public class RulesAdapter extends RecyclerView.Adapter<RulesAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(RulesAdapter.ViewHolder holder, int position) {
-        holder.currentState.setText(holder.currentState.getText() + mRules.get(position).getCurrentState());
-        holder.currentSymbol.setText(holder.currentSymbol.getText() + mRules.get(position).getCurrentSymbol());
-        holder.newSymbol.setText(holder.newSymbol.getText() + mRules.get(position).getNewSymbol());
-        holder.direction.setText(holder.direction.getText() + mRules.get(position).getDirection());
-        holder.newState.setText(holder.newState.getText() + mRules.get(position).getNewSymbol());
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.currentState.setText("Estado atual: " + mRules.get(position).getCurrentState());
+        holder.currentSymbol.setText("Símbolo atual: "+ mRules.get(position).getCurrentSymbol());
+        holder.newSymbol.setText("Novo símbolo: " + mRules.get(position).getNewSymbol());
+        holder.direction.setText("Direção: " + mRules.get(position).getDirection().toUpperCase());
+        holder.newState.setText("Novo estado: " + mRules.get(position).getNewState());
     }
 
     @Override
