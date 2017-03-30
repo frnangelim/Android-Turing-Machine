@@ -1,9 +1,6 @@
 package com.example.huawei.maquinadeturing.activities;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -135,7 +132,7 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         String[] array = rule.split(",");
 
         if(array.length == 5){
-            if(array[3].equalsIgnoreCase("L") || array[3].equalsIgnoreCase("R")){
+            if(array[3].equalsIgnoreCase("L") || array[3].equalsIgnoreCase("R") || array[3].equals("*")){
                 Rule newRule = new Rule();
                 for(int i = 0; i < array.length; i++){
                     newRule.setCurrentState(array[0]);
@@ -185,7 +182,7 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.delete, menu);
+        getMenuInflater().inflate(R.menu.menu_rules, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -196,6 +193,9 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         switch (id) {
             case R.id.delete_rules:
                 deleteAll();
+                return true;
+            case R.id.joker:
+                addFixedRules();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -209,5 +209,31 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         profile.setStates(mStates);
         SessionManager.getInstance(getApplicationContext()).setUser(profile);
         createAdapter();
+    }
+
+    private void addFixedRules(){
+        // This example program checks if the input string is a binary palindrome.
+        // Input: a string of 0's and 1's, eg '1001001'
+
+        validateRule("q0,0,_,r,1o");
+        validateRule("q0,1,_,r,1i");
+        validateRule("0,_,_,*,accept");
+
+        validateRule("1o,_,_,l,2o");
+        validateRule("1o,*,*,r,1o");
+        validateRule("1i,_,_,l,2i");
+        validateRule("1i,*,*,r,1i");
+
+        validateRule("2o,0,_,l,3");
+        validateRule("2o,_,_,*,accept");
+        validateRule("2o,*,*,*,reject");
+        validateRule("2i,1,_,l,3");
+        validateRule("2i,_,_,*,accept");
+        validateRule("2i,*,*,*,reject");
+
+        validateRule("3,_,_,*,accept");
+        validateRule("3,*,*,l,4");
+        validateRule("4,*,*,l,4");
+        validateRule("4,_,_,r,0");
     }
 }

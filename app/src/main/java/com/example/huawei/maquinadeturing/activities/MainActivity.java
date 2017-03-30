@@ -69,8 +69,12 @@ public class MainActivity extends AppCompatActivity {
         btnInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mStates == null || mStates.size() == 0){
+                if(mStates == null || mStates.size() == 0) {
                     Toast.makeText(getApplicationContext(), "Antes de continuar, defina as regras da máquina.", Toast.LENGTH_LONG).show();
+                }else if(input.getText().length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Antes de continuar, digite uma entrada.", Toast.LENGTH_LONG).show();
+                }else if(!containsQZero()){
+                    Toast.makeText(getApplicationContext(), "Antes de continuar, defina um estado q0.", Toast.LENGTH_LONG).show();
                 }else{
                     redirectToExecute();
                 }
@@ -104,5 +108,14 @@ public class MainActivity extends AppCompatActivity {
 
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    private boolean containsQZero(){
+        for(int i = 0; i < mStates.size(); i++){
+            if(mStates.get(i).getStateName().equals("q0")){
+                return true;
+            }
+        }
+        return false;
     }
 }

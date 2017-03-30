@@ -38,10 +38,12 @@
                 android:layout_below="@+id/title"
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="50dp"
-                android:maxLines="1"
                 android:background="@drawable/shape_edit"
                 android:hint="Digite a entrada"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:maxLines="1"
+                android:inputType="textFilter"
+                />
 
             <Button
                 android:id="@+id/rules"

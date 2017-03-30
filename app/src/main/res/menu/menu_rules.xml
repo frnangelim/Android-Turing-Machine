@@ -3,9 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/joker"
+        android:icon="@drawable/joker"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/delete_rules"
         android:icon="@drawable/garbage"
         android:title=""
         app:showAsAction="always" />
+
+
 
 </menu>
