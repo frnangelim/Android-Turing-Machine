@@ -1,6 +1,8 @@
 package com.example.huawei.maquinadeturing.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -65,6 +67,8 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         setRules.setOnKeyListener(this);
 
         createAdapter();
+
+        Log.d("input", "oi");
     }
 
     private void createRecyclerView(){
@@ -128,19 +132,19 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
     }
 
     private void validateRule(String input){
+        Log.d("input", input);
         String rule = input;
         String[] array = rule.split(",");
 
         if(array.length == 5){
             if(array[3].equalsIgnoreCase("L") || array[3].equalsIgnoreCase("R") || array[3].equals("*")){
                 Rule newRule = new Rule();
-                for(int i = 0; i < array.length; i++){
-                    newRule.setCurrentState(array[0]);
-                    newRule.setCurrentSymbol(array[1]);
-                    newRule.setNewSymbol(array[2]);
-                    newRule.setDirection(array[3]);
-                    newRule.setNewState(array[4]);
-                }
+                newRule.setCurrentState(array[0]);
+                newRule.setCurrentSymbol(array[1]);
+                newRule.setNewSymbol(array[2]);
+                newRule.setDirection(array[3]);
+                newRule.setNewState(array[4]);
+
                 mRules.add(newRule);
                 mAdapter.notifyDataSetChanged();
                 checkRulesSize(); // Verify if the rules are empty to change UI.
@@ -192,14 +196,29 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
 
         switch (id) {
             case R.id.delete_rules:
-                deleteAll();
+                alertDelete();
                 return true;
             case R.id.joker:
-                addFixedRules();
+                alertAddingRule();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void alertDelete(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Atenção!")
+                .setMessage("Tem certeza que deseja apagar todas as regras?")
+                .setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteAll();
+                    }
+                })
+                .setNegativeButton("Cancelar", null);
+
+        builder.show();
     }
 
     private void deleteAll(){
@@ -211,7 +230,24 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         createAdapter();
     }
 
+    private void alertAddingRule(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Coringa!")
+                .setMessage("Deseja adicionar as regras para que sua máquina reconheça" +
+                        " a linguagem de palíndromos binários?")
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        addFixedRules();
+                    }
+                })
+                .setNegativeButton("Não", null);
+
+        builder.show();
+    }
+
     private void addFixedRules(){
+        deleteAll();
         // This example program checks if the input string is a binary palindrome.
         // Input: a string of 0's and 1's, eg '1001001'
 
@@ -235,5 +271,9 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         validateRule("3,*,*,l,4");
         validateRule("4,*,*,l,4");
         validateRule("4,_,_,r,0");
+
+        mAdapter = new RulesAdapter(this, mRules, this);
+        mRecyclerView.setAdapter(mAdapter);
+
     }
 }
