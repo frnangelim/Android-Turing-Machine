@@ -67,8 +67,6 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         setRules.setOnKeyListener(this);
 
         createAdapter();
-
-        Log.d("input", "oi");
     }
 
     private void createRecyclerView(){
@@ -132,7 +130,6 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
     }
 
     private void validateRule(String input){
-        Log.d("input", input);
         String rule = input;
         String[] array = rule.split(",");
 
@@ -253,7 +250,7 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
 
         validateRule("q0,0,_,r,1o");
         validateRule("q0,1,_,r,1i");
-        validateRule("0,_,_,*,accept");
+        validateRule("q0,_,_,*,accept");
 
         validateRule("1o,_,_,l,2o");
         validateRule("1o,*,*,r,1o");
@@ -270,7 +267,7 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         validateRule("3,_,_,*,accept");
         validateRule("3,*,*,l,4");
         validateRule("4,*,*,l,4");
-        validateRule("4,_,_,r,0");
+        validateRule("4,_,_,r,q0");
 
         mAdapter = new RulesAdapter(this, mRules, this);
         mRecyclerView.setAdapter(mAdapter);
