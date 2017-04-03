@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MaquinaDeTuring</string>
+
+    <string name="edittext_hint"><font size="12">currentState, currentSymbol, newSymbol, direction, newState</font></string>
 </resources>

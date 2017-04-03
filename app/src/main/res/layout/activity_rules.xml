@@ -11,11 +11,11 @@
         android:id="@+id/set_rule"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="currentState, currentSymbol, newSymbol, direction, newState"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
+        android:hint="@string/edittext_hint"
         android:background="@drawable/shape_edit"
-        />
+        android:maxLines="1"
+        android:inputType="text"
+        android:gravity="center"/>
     
     <TextView
         android:id="@+id/title"

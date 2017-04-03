@@ -171,6 +171,13 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
 
             mStates.add(newState);
         }
+
+        this.profile.setStates(mStates);
+        this.profile.setRules(mRules);
+        SessionManager.getInstance(getApplicationContext()).setUser(profile);
+
+        mAdapter = new RulesAdapter(this, mRules, this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override

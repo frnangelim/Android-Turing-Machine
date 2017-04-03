@@ -35,7 +35,7 @@ public class TuringMachine {
         this.mStates = states;
         this.mTape = tape;
         this.mStatus = status;
-        mStatus.setVisibility(View.INVISIBLE);
+        mStatus.setVisibility(View.GONE);
 
         this.mCurrentState = getInitialState();
     }
