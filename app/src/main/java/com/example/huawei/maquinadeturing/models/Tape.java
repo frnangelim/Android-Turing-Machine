@@ -66,17 +66,17 @@ public class Tape {
         return input.get(position);
     }
 
-    public void left() throws InterruptedException {
+    public void left(){
         position--;
         setTextViews();
     }
 
-    public void right() throws InterruptedException {
+    public void right(){
         position++;
         setTextViews();
     }
 
-    private void setTextViews() throws InterruptedException {
+    private void setTextViews(){
         String first = "";
         String selected = "";
         String last = "";

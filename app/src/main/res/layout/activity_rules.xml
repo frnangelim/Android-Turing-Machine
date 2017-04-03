@@ -4,8 +4,9 @@
     android:id="@+id/activity_rules"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DCDCDC"
-    tools:context="com.example.huawei.maquinadeturing.activities.RulesActivity">
+    android:background="#808080"
+    tools:context="com.example.huawei.maquinadeturing.activities.RulesActivity"
+    >
 
     <EditText
         android:id="@+id/set_rule"
@@ -15,7 +16,8 @@
         android:background="@drawable/shape_edit"
         android:maxLines="1"
         android:inputType="text"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:backgroundTint="#C0C0C0"/>
     
     <TextView
         android:id="@+id/title"
@@ -42,7 +44,7 @@
         android:src="@drawable/sad"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="#DCDCDC" />
+        android:background="#808080" />
 
     <TextView
         android:id="@+id/sad_text"

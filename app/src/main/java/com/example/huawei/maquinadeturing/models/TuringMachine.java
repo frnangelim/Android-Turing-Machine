@@ -1,13 +1,12 @@
 package com.example.huawei.maquinadeturing.models;
 
+import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
+import android.text.Html;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.huawei.maquinadeturing.util.SessionManager;
-
-import java.sql.Array;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +18,7 @@ public class TuringMachine {
     private ArrayList<State> mStates;
     private Tape mTape;
     private TextView mStatus;
+    private ImageView mStatusFace;
     private State mCurrentState;
 
     private final int ACCEPTED = 1;
@@ -27,21 +27,21 @@ public class TuringMachine {
 
     private int machineStatus = NOTHING_YET;
 
-    public TuringMachine(){
+    private Context mContext;
 
-    }
-
-    public TuringMachine(ArrayList<State> states, Tape tape, TextView status){
+    public TuringMachine(ArrayList<State> states, Tape tape, TextView status, Context ctx){
         this.mStates = states;
         this.mTape = tape;
         this.mStatus = status;
-        mStatus.setVisibility(View.GONE);
+        this.mContext = ctx;
+
+        mStatus.setVisibility(View.INVISIBLE);
 
         this.mCurrentState = getInitialState();
     }
 
 
-    public int run() throws InterruptedException { // Revisar!
+    public int run(){ // Revisar!
         String tapeCurrentSymbol = mTape.currentCharacter();
         ArrayList<Rule> rulesList = mCurrentState.getMyRules();
 
@@ -88,6 +88,7 @@ public class TuringMachine {
         mStatus.setVisibility(View.VISIBLE);
         mStatus.setText("Accepted!");
         mStatus.setTextColor(Color.parseColor("#008000"));
+
         setMachineStatus(1);
     }
 
@@ -95,8 +96,27 @@ public class TuringMachine {
         mStatus.setVisibility(View.VISIBLE);
         mStatus.setText("Rejected!");
         mStatus.setTextColor(Color.parseColor("#FF0000"));
+
         setMachineStatus(-1);
     }
+
+//    private setTextViews(){
+//        String first = "";
+//        String selected = "";
+//        String last = "";
+//
+//        for(int i = 0; i < position; i++){
+//            first += input.get(i);
+//        }
+//
+//        selected = "<font color='#008000'>" + input.get(position) +"</font>";
+//
+//        for(int i = position+1; i < input.size(); i++){
+//            last += input.get(i);
+//        }
+//        inputText.setText(Html.fromHtml(first + selected + last));
+//    }
+
 
     public int getMachineStatus(){
         return machineStatus;
@@ -126,7 +146,7 @@ public class TuringMachine {
         return false;
     }
 
-    private void moveTape(String direction) throws InterruptedException {
+    private void moveTape(String direction){
         if(direction.equalsIgnoreCase("R")){
             mTape.right();
         }else if(direction.equalsIgnoreCase("L")){

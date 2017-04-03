@@ -1,8 +1,10 @@
 package com.example.huawei.maquinadeturing.activities;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +28,13 @@ public class ExecutingActivity extends AppCompatActivity{
     private TextView inputText;
 
     private ImageView playButton;
+    private ImageView stepButton;
+
+    private final int NOTHING_YET = 0;
+
+    private TuringMachine machine;
+    private Tape mTape;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,27 +43,46 @@ public class ExecutingActivity extends AppCompatActivity{
 
         inputText = (TextView) findViewById(R.id.selected);
         status = (TextView) findViewById(R.id.status);
-        playButton = (ImageView) findViewById(R.id.next);
+        playButton = (ImageView) findViewById(R.id.play);
+        stepButton = (ImageView) findViewById(R.id.next);
 
         Bundle bundle = getIntent().getExtras();
         input = bundle.getString(USER_INPUT);
         profile = SessionManager.getInstance(getApplicationContext()).getUserSession();
         mStates = profile.getStates();
 
-        Tape mTape = new Tape(input, inputText);
-        final TuringMachine machine = new TuringMachine(mStates, mTape, status);
+        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
 
+
+        mTape = new Tape(input, inputText);
+        machine = new TuringMachine(mStates, mTape, status, this);
+
+        onClickPlay();
+        onClickStep();
+    }
+
+    private void onClickPlay() {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(machine.getMachineStatus() == 0){
-                    try {
-                        machine.run();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                while(machine.getMachineStatus() == NOTHING_YET){
+                    machine.run();
                 }
             }
         });
     }
+
+    private void onClickStep() {
+        stepButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(machine.getMachineStatus() == NOTHING_YET){
+                    machine.run();
+                }
+            }
+        });
+    }
+
+
 }
