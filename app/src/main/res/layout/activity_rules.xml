@@ -4,7 +4,7 @@
     android:id="@+id/activity_rules"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#808080"
+    android:background="#2E2E2E"
     tools:context="com.example.huawei.maquinadeturing.activities.RulesActivity"
     >
 
@@ -27,7 +27,8 @@
         android:text="Rules"
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
-        android:textSize="20dp"/>
+        android:textSize="20dp"
+        android:textColor="#808080"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
@@ -44,7 +45,7 @@
         android:src="@drawable/sad"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="#808080" />
+        android:background="#2E2E2E" />
 
     <TextView
         android:id="@+id/sad_text"
