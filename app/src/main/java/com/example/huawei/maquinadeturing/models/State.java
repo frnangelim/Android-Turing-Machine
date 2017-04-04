@@ -26,6 +26,10 @@ public class State implements Parcelable{
         this.myRules = new ArrayList<>();
     }
 
+    /**
+     * Method that will add a new rule
+     * @param rule Rule that will be added
+     */
     public void addRule(Rule rule){
         if(rule.getCurrentState().equals(this.stateName)){
             myRules.add(rule);
@@ -33,12 +37,20 @@ public class State implements Parcelable{
         }
     }
 
+    /**
+     * Method that will update the hashmaps
+     * @param rule Rule that will be put on hashmaps
+     */
     public void updateHashMaps(Rule rule){
         updateToGo(rule);
         updateDirections(rule);
         updateSymbolToWrite(rule);
     }
 
+    /**
+     * Method that will update next state hashmap
+     * @param rule Rule that will be update
+     */
     private void updateToGo(Rule rule) {
         String currentSymbol = rule.getCurrentSymbol();
         String newState = rule.getNewState();
@@ -46,6 +58,10 @@ public class State implements Parcelable{
         stateToGo.put(currentSymbol, newState);
     }
 
+    /**
+     * Method that will update next direction hashmap
+     * @param rule Rule that will be update
+     */
     private void updateDirections(Rule rule) {
         String currentSymbol = rule.getCurrentSymbol();
         String direction = rule.getDirection();
@@ -53,6 +69,10 @@ public class State implements Parcelable{
         directions.put(currentSymbol, direction);
     }
 
+    /**
+     * Method that will update the symbol that will be written
+     * @param rule Rule that will be update
+     */
     private void updateSymbolToWrite(Rule rule) {
         String currentSymbol = rule.getCurrentSymbol();
         String symbol = rule.getNewSymbol();
@@ -60,6 +80,10 @@ public class State implements Parcelable{
         symbolToWrite.put(currentSymbol, symbol);
     }
 
+    /**
+     * Method that will return next state
+     * @param symbolRead String that will be received
+     */
     public String nextStateReading(String symbolRead){
         if(stateToGo.containsKey(symbolRead)){
             String state = stateToGo.get(symbolRead);
@@ -68,6 +92,10 @@ public class State implements Parcelable{
         return "nothing";
     }
 
+    /**
+     * Method that returns the next direction according to a received symbol
+     * @param symbolRead symbol read
+     */
     public String directionReading(String symbolRead){
         if(directions.containsKey(symbolRead)){
             String direction = directions.get(symbolRead);
@@ -76,6 +104,10 @@ public class State implements Parcelable{
         return "nothing";
     }
 
+    /**
+     * Method that returns the next symbol to write according to a received symbol
+     * @param symbolRead symbol read
+     */
     public String writeSymbolReading(String symbolRead){
         if(directions.containsKey(symbolRead)){
             String symbol = symbolToWrite.get(symbolRead);
@@ -84,18 +116,34 @@ public class State implements Parcelable{
         return "nothing";
     }
 
+    /** Method that returns the map of statesToGo
+     *
+     * @return map of statesToGo
+     */
     public Map<String, String> getStateToGo() {
         return stateToGo;
     }
 
+    /** Method that returns the state name
+     *
+     * @return state name
+     */
     public String getStateName() {
         return stateName;
     }
 
+    /** Method that returns the arraylist of rules
+     *
+     * @return rules of the state
+     */
     public ArrayList<Rule> getMyRules() {
         return myRules;
     }
 
+    /** Method that sets the stateName
+     *
+     * @param stateName
+     */
     public void setStateName(String stateName) {
         this.stateName = stateName;
     }

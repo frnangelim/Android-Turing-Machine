@@ -32,6 +32,8 @@ public class Tape {
         setInitialText();
     }
 
+    /** This method will set the initial text of the textview, based on the input of the user.
+     */
     private void setInitialText(){
 
         String first = "";
@@ -51,6 +53,10 @@ public class Tape {
         inputText.setText(Html.fromHtml(first + selected + last));
     }
 
+    /** Method that writes a symbol on tape.
+     *
+     * @param symbol
+     */
     public void write(String symbol){
         if(position != 0 && position != input.size()){
             if(symbol.equals(BLANK)){
@@ -62,20 +68,32 @@ public class Tape {
         }
     }
 
+    /** Method to get the current symbol on tape.
+     *
+     * @return currentSymbol
+     */
     public String currentCharacter() {
         return input.get(position);
     }
 
+    /** Method to update the position of the tape
+     *
+     */
     public void left(){
         position--;
         setTextViews();
     }
 
+    /** Method to update the position of the tape
+     *
+     */
     public void right(){
         position++;
         setTextViews();
     }
 
+    /** This method will set the text of the textview, based on the current data.
+     */
     private void setTextViews(){
         String first = "";
         String selected = "";
@@ -93,12 +111,12 @@ public class Tape {
         inputText.setText(Html.fromHtml(first + selected + last));
     }
 
+    /** This method return the input.
+     *
+     * @return
+     */
     public ArrayList<String> getInput() {
         return input;
-    }
-
-    public void setInput(ArrayList<String> input) {
-        this.input = input;
     }
 
     public int getPosition() {

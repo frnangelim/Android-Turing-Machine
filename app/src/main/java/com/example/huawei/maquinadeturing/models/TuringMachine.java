@@ -44,6 +44,10 @@ public class TuringMachine {
     }
 
 
+    /** Main method that execute the whole logic of the machine.
+     *
+     * @return status of the machine.
+     */
     public int run(){ // Revisar!
         mCurrentStateText.setText("Estado atual: " + mCurrentState.getStateName());
         String tapeCurrentSymbol = mTape.currentCharacter();
@@ -88,6 +92,9 @@ public class TuringMachine {
         }
     }
 
+    /** Set the textViews when the machine accept
+     *
+     */
     private void accept(){
         mStatus.setVisibility(View.VISIBLE);
         mStatus.setText("Accepted!");
@@ -96,6 +103,9 @@ public class TuringMachine {
         setMachineStatus(1);
     }
 
+    /** Set the textViews when the machine reject
+     *
+     */
     private void reject(){
         mStatus.setVisibility(View.VISIBLE);
         mStatus.setText("Rejected!");
@@ -104,32 +114,25 @@ public class TuringMachine {
         setMachineStatus(-1);
     }
 
-//    private setTextViews(){
-//        String first = "";
-//        String selected = "";
-//        String last = "";
-//
-//        for(int i = 0; i < position; i++){
-//            first += input.get(i);
-//        }
-//
-//        selected = "<font color='#008000'>" + input.get(position) +"</font>";
-//
-//        for(int i = position+1; i < input.size(); i++){
-//            last += input.get(i);
-//        }
-//        inputText.setText(Html.fromHtml(first + selected + last));
-//    }
-
-
+    /** Return the current status of the machine
+     *
+     * @return -1,0,1
+     */
     public int getMachineStatus(){
         return machineStatus;
     }
 
+    /** Set the current status of the machine
+     */
     private void setMachineStatus(int status){
         this.machineStatus = status;
     }
 
+    /** Verify if any state has a rule that contains star symbol(*)
+     *
+     * @param rulesList
+     * @return
+     */
     private boolean containsStar(ArrayList<Rule> rulesList){
         for(int i = 0; i < rulesList.size(); i++){
             String symbol = rulesList.get(i).getCurrentSymbol();
@@ -140,6 +143,12 @@ public class TuringMachine {
         return false;
     }
 
+    /** Verify if any state contain a rule with tapeCurrentSymbol as key of its hashmaos
+     *
+     * @param rulesList
+     * @param tapeCurrentSymbol
+     * @return
+     */
     private boolean containsRule(ArrayList<Rule> rulesList, String tapeCurrentSymbol){
         for(int i = 0; i < rulesList.size(); i++){
             String symbol = rulesList.get(i).getCurrentSymbol();
@@ -150,6 +159,10 @@ public class TuringMachine {
         return false;
     }
 
+    /** Move the tape to right or left
+     *
+     * @param direction
+     */
     private void moveTape(String direction){
         if(direction.equalsIgnoreCase("R")){
             mTape.right();
@@ -158,17 +171,11 @@ public class TuringMachine {
         }
     }
 
-    private boolean nothingToDo(State currentState){
-        ArrayList<Rule> myRules = currentState.getMyRules();
-        for(int i = 0; i < myRules.size(); i++){
-            Rule rule = myRules.get(i);
-            if(rule.getCurrentSymbol().equals("*") || rule.getNewSymbol().equals("*")){ // Não lê nem escreve nada
-                return true;
-            }
-        }
-        return false;
-    }
-
+    /** Verify if a state exist with the param name.
+     *
+     * @param stateName
+     * @return
+     */
     private State findState(String stateName){
         for(int i = 0; i < mStates.size(); i ++){
             if(mStates.get(i).getStateName().equals(stateName)){
@@ -178,17 +185,11 @@ public class TuringMachine {
         return null; // Próximo estado não existe.
     }
 
-    private ArrayList<String> makeInput(String input){
-        String[] array = input.split("");
-        ArrayList<String> arrayInput = new ArrayList<>();
 
-        for(int i = 0; i < array.length; i++){
-            arrayInput.add(array[i]);
-        }
-
-        return arrayInput;
-    }
-
+    /** Return the state q0.
+     *
+     * @return initial state
+     */
     private State getInitialState(){
         for(int i = 0; i < mStates.size(); i++){
             if(mStates.get(i).getStateName().equalsIgnoreCase("q0")){
@@ -198,20 +199,4 @@ public class TuringMachine {
         return null; // Isso nunca deve acontecer, deve-se garantir que existirá uma regra q0.
     }
 
-
-    public ArrayList<State> getmStates() {
-        return mStates;
-    }
-
-    public void setmStates(ArrayList<State> mStates) {
-        this.mStates = mStates;
-    }
-
-    public Tape getmTape() {
-        return mTape;
-    }
-
-    public void setmTape(Tape mTape) {
-        this.mTape = mTape;
-    }
 }
