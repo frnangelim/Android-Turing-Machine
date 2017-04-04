@@ -27,6 +27,8 @@ public class ExecutingActivity extends AppCompatActivity{
 
     private TextView inputText;
 
+    private TextView currentStateText;
+
     private ImageView playButton;
     private ImageView stepButton;
 
@@ -46,6 +48,8 @@ public class ExecutingActivity extends AppCompatActivity{
         playButton = (ImageView) findViewById(R.id.play);
         stepButton = (ImageView) findViewById(R.id.next);
 
+        currentStateText =  (TextView) findViewById(R.id.text_current_state);
+
         Bundle bundle = getIntent().getExtras();
         input = bundle.getString(USER_INPUT);
         profile = SessionManager.getInstance(getApplicationContext()).getUserSession();
@@ -56,7 +60,7 @@ public class ExecutingActivity extends AppCompatActivity{
 
 
         mTape = new Tape(input, inputText);
-        machine = new TuringMachine(mStates, mTape, status, this);
+        machine = new TuringMachine(mStates, mTape, status, this, currentStateText);
 
         onClickPlay();
         onClickStep();

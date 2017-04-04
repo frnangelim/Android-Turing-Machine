@@ -20,6 +20,7 @@ public class TuringMachine {
     private TextView mStatus;
     private ImageView mStatusFace;
     private State mCurrentState;
+    private TextView mCurrentStateText;
 
     private final int ACCEPTED = 1;
     private final int NOT_ACCEPTED = -1;
@@ -29,11 +30,13 @@ public class TuringMachine {
 
     private Context mContext;
 
-    public TuringMachine(ArrayList<State> states, Tape tape, TextView status, Context ctx){
+    public TuringMachine(ArrayList<State> states, Tape tape, TextView status, Context ctx, TextView currentStateText){
         this.mStates = states;
         this.mTape = tape;
         this.mStatus = status;
         this.mContext = ctx;
+
+        this.mCurrentStateText = currentStateText;
 
         mStatus.setVisibility(View.INVISIBLE);
 
@@ -42,6 +45,7 @@ public class TuringMachine {
 
 
     public int run(){ // Revisar!
+        mCurrentStateText.setText("Estado atual: " + mCurrentState.getStateName());
         String tapeCurrentSymbol = mTape.currentCharacter();
         ArrayList<Rule> rulesList = mCurrentState.getMyRules();
 
