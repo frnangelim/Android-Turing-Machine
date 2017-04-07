@@ -2,10 +2,6 @@ package com.example.huawei.maquinadeturing.models;
 
 import java.util.ArrayList;
 
-/**
- * Created by huawei on 29/03/17.
- */
-
 public class Profile {
 
     private ArrayList<State> mStates = new ArrayList<>();

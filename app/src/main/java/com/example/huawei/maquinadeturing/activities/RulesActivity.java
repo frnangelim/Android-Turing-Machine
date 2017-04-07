@@ -129,30 +129,33 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
 
     }
 
-    private void validateRule(String input){
+    private void validateRule(String input) {
         String rule = input;
-        String[] array = rule.split(",");
+        String[] array = rule.split("%");
 
-        if(array.length == 5){
-            if(array[3].equalsIgnoreCase("L") || array[3].equalsIgnoreCase("R") || array[3].equals("*")){
-                Rule newRule = new Rule();
-                newRule.setCurrentState(array[0]);
-                newRule.setCurrentSymbol(array[1]);
-                newRule.setNewSymbol(array[2]);
-                newRule.setDirection(array[3]);
-                newRule.setNewState(array[4]);
+        for (int i = 0; i < array.length; i++) {
+            String[] currentRule = array[i].split(",");
+            if (currentRule.length == 5) {
+                if (currentRule[3].equalsIgnoreCase("L") || currentRule[3].equalsIgnoreCase("R") || currentRule[3].equals("*")) {
+                    Rule newRule = new Rule();
+                    newRule.setCurrentState(currentRule[0]);
+                    newRule.setCurrentSymbol(currentRule[1]);
+                    newRule.setNewSymbol(currentRule[2]);
+                    newRule.setDirection(currentRule[3]);
+                    newRule.setNewState(currentRule[4]);
 
-                mRules.add(newRule);
-                mAdapter.notifyDataSetChanged();
-                checkRulesSize(); // Verify if the rules are empty to change UI.
+                    mRules.add(newRule);
+                    mAdapter.notifyDataSetChanged();
+                    checkRulesSize(); // Verify if the rules are empty to change UI.
 
-                createState(newRule); // Important !
-            }else{
+                    createState(newRule); // Important !
+                } else {
+                    Toast.makeText(this, "Digite uma regra válida!", Toast.LENGTH_LONG).show();
+                }
+
+            } else {
                 Toast.makeText(this, "Digite uma regra válida!", Toast.LENGTH_LONG).show();
             }
-        }else {
-            Toast.makeText(this, "Digite uma regra válida!", Toast.LENGTH_LONG).show();
-
         }
     }
 
@@ -194,6 +197,7 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -204,6 +208,9 @@ public class RulesActivity extends AppCompatActivity implements OnEmptyRulesList
                 return true;
             case R.id.joker:
                 alertAddingRule();
+                return true;
+            case android.R.id.home:
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

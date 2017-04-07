@@ -5,9 +5,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by huawei on 30/03/17.
- */
 
 public class Tape {
 
@@ -59,12 +56,10 @@ public class Tape {
      */
     public void write(String symbol){
         if(position != 0 && position != input.size()){
-            if(symbol.equals(BLANK)){
+            if(!symbol.equals("*")){
                 input.remove(position);
+                input.add(position, symbol);
             }
-        }
-        if(!symbol.equals("*")) {
-            input.add(position, symbol);
         }
     }
 

@@ -3,10 +3,6 @@ package com.example.huawei.maquinadeturing.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by huawei on 28/03/17.
- */
-
 public class Rule implements Parcelable {
 
     private String currentState;

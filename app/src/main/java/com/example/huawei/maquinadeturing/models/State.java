@@ -8,10 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by huawei on 29/03/17.
- */
-
 public class State implements Parcelable{
 
     private String stateName;

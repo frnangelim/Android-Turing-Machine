@@ -9,10 +9,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by huawei on 30/03/17.
- */
-
 public class TuringMachine {
 
     private ArrayList<State> mStates;
@@ -48,7 +44,7 @@ public class TuringMachine {
      *
      * @return status of the machine.
      */
-    public int run(){ // Revisar!
+    public int run(){
         mCurrentStateText.setText("Estado atual: " + mCurrentState.getStateName());
         String tapeCurrentSymbol = mTape.currentCharacter();
         ArrayList<Rule> rulesList = mCurrentState.getMyRules();
