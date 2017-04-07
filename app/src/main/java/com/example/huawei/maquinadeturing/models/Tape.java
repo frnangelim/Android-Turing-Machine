@@ -1,6 +1,7 @@
 package com.example.huawei.maquinadeturing.models;
 
 import android.text.Html;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -55,11 +56,22 @@ public class Tape {
      * @param symbol
      */
     public void write(String symbol){
-        if(position != 0 && position != input.size()){
+        if(position != 0 && position != input.size()-1){
             if(!symbol.equals("*")){
                 input.remove(position);
                 input.add(position, symbol);
             }
+        }else{
+            if(position == input.size()-1){
+                input.remove(position);
+                input.add(position, symbol);
+                input.add(BLANK);
+            }else{
+                input.remove(position);
+                input.add(position, symbol);
+                input.add(0,BLANK);
+            }
+
         }
     }
 
@@ -75,7 +87,9 @@ public class Tape {
      *
      */
     public void left(){
-        position--;
+        if(position != 0){
+            position--;
+        }
         setTextViews();
     }
 
